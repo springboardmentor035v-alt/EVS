@@ -1,0 +1,19 @@
+name,latitude,longitude,parameter,value,unit,temperature,humidity,wind_speed,roads_count,industrial_count,agriculture_count,dumps_count,timestamp_air,source_air,timestamp_weather,source_weather
+Chennai,13.0827,80.2707,,,,,,,9960.0,14.0,0.0,2.0,,,,
+Delhi,28.6139,77.209,co,271.02,µg/m³,28.07,83.0,0.0,,,,,1757706920.0,OpenWeatherMap AirPollution,1757707200.0,OpenWeatherMap
+Delhi,28.6139,77.209,no,0.0,µg/m³,28.07,83.0,0.0,,,,,1757706920.0,OpenWeatherMap AirPollution,1757707200.0,OpenWeatherMap
+Delhi,28.6139,77.209,no2,8.79,µg/m³,28.07,83.0,0.0,,,,,1757706920.0,OpenWeatherMap AirPollution,1757707200.0,OpenWeatherMap
+Delhi,28.6139,77.209,o3,30.15,µg/m³,28.07,83.0,0.0,,,,,1757706920.0,OpenWeatherMap AirPollution,1757707200.0,OpenWeatherMap
+Delhi,28.6139,77.209,so2,1.09,µg/m³,28.07,83.0,0.0,,,,,1757706920.0,OpenWeatherMap AirPollution,1757707200.0,OpenWeatherMap
+Delhi,28.6139,77.209,pm2_5,16.16,µg/m³,28.07,83.0,0.0,,,,,1757706920.0,OpenWeatherMap AirPollution,1757707200.0,OpenWeatherMap
+Delhi,28.6139,77.209,pm10,31.93,µg/m³,28.07,83.0,0.0,,,,,1757706920.0,OpenWeatherMap AirPollution,1757707200.0,OpenWeatherMap
+Delhi,28.6139,77.209,nh3,2.39,µg/m³,28.07,83.0,0.0,,,,,1757706920.0,OpenWeatherMap AirPollution,1757707200.0,OpenWeatherMap
+Karur,10.957,78.0806,,,,,,,3538.0,0.0,1.0,0.0,,,,
+Mumbai,19.076,72.8777,co,83.73,µg/m³,27.0,83.0,2.06,,,,,1757706591.0,OpenWeatherMap AirPollution,1757707524.0,OpenWeatherMap
+Mumbai,19.076,72.8777,no,0.0,µg/m³,27.0,83.0,2.06,,,,,1757706591.0,OpenWeatherMap AirPollution,1757707524.0,OpenWeatherMap
+Mumbai,19.076,72.8777,no2,0.58,µg/m³,27.0,83.0,2.06,,,,,1757706591.0,OpenWeatherMap AirPollution,1757707524.0,OpenWeatherMap
+Mumbai,19.076,72.8777,o3,32.5,µg/m³,27.0,83.0,2.06,,,,,1757706591.0,OpenWeatherMap AirPollution,1757707524.0,OpenWeatherMap
+Mumbai,19.076,72.8777,so2,0.88,µg/m³,27.0,83.0,2.06,,,,,1757706591.0,OpenWeatherMap AirPollution,1757707524.0,OpenWeatherMap
+Mumbai,19.076,72.8777,pm2_5,1.83,µg/m³,27.0,83.0,2.06,,,,,1757706591.0,OpenWeatherMap AirPollution,1757707524.0,OpenWeatherMap
+Mumbai,19.076,72.8777,pm10,3.85,µg/m³,27.0,83.0,2.06,,,,,1757706591.0,OpenWeatherMap AirPollution,1757707524.0,OpenWeatherMap
+Mumbai,19.076,72.8777,nh3,0.0,µg/m³,27.0,83.0,2.06,,,,,1757706591.0,OpenWeatherMap AirPollution,1757707524.0,OpenWeatherMap

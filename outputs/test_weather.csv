@@ -1,0 +1,3 @@
+name,lat,lon,temperature,humidity,wind_speed,timestamp,source
+Delhi,28.6,77.2,25,60,2.5,1234567890,TestData
+Mumbai,19.0,72.8,30,70,3.2,1234567891,TestData

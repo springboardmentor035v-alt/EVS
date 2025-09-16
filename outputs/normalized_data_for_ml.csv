@@ -1,0 +1,3 @@
+name,latitude,longitude,timestamp,hour,day_of_week,month,season,temperature,humidity,wind_speed,roads_count,industrial_count,agriculture_count,dumps_count,co,nh3,no,no2,o3,pm10,pm2_5,so2,roads_proximity,industrial_proximity,agriculture_proximity,dumps_proximity,aqi
+Delhi,28.6139,77.209,2025-09-12 19:55:20,0.0,0.0,0.0,Monsoon,1.0,0.0,0.0,0.0,0.0,1.0,0.0,1.0,1.0,0.0,1.0,0.0,1.0,1.0,1.0,1.0,0.9999999999999996,0.0,1.0,0.9999999999999999
+Mumbai,19.076,72.8777,2025-09-12 19:49:51,0.0,0.0,0.0,Monsoon,0.0,0.0,1.0,1.0,1.0,0.0,0.9999999999999998,0.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,0.0,0.0,0.9999999999999996,0.0,0.0
