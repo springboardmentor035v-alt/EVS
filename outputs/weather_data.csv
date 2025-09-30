@@ -1,3 +1,0 @@
-name,lat,lon,temperature,humidity,wind_speed,timestamp,source
-Delhi,28.6139,77.209,28.07,83,0.0,1757707200,OpenWeatherMap
-Mumbai,19.076,72.8777,27.0,83,2.06,1757707524,OpenWeatherMap

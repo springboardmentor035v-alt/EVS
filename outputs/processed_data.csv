@@ -1,3 +1,0 @@
-name,latitude,longitude,timestamp,temperature,humidity,wind_speed,roads_count,industrial_count,agriculture_count,dumps_count,co,nh3,no,no2,o3,pm10,pm2_5,so2,aqi,aqi_category,road_density
-Delhi,28.6139,77.209,2025-09-12 19:55:20,28.07,83,0.0,5000,150,200,50,271.02,2.39,0.0,8.79,30.15,31.93,16.16,1.09,26.933333333333334,Good,397.88735772973837
-Mumbai,19.076,72.8777,2025-09-12 19:49:51,27.0,83,2.06,7000,200,150,80,83.73,0.0,0.0,0.58,32.5,3.85,1.83,0.88,3.05,Good,557.0423008216337

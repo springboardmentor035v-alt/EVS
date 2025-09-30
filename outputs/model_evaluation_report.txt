@@ -1,0 +1,12 @@
+XGBoost Model Evaluation Report
+==============================
+Best Parameters: {'learning_rate': 0.05, 'max_depth': 3, 'n_estimators': 100}
+
+              precision    recall  f1-score   support
+
+ Mixed/Other       0.00      0.00      0.00         1
+ Natural/Low       0.50      1.00      0.67         1
+
+    accuracy                           0.50         2
+   macro avg       0.25      0.50      0.33         2
+weighted avg       0.25      0.50      0.33         2
