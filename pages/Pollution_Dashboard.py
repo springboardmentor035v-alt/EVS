@@ -11,6 +11,7 @@ import os
 from datetime import datetime, timedelta
 import numpy as np
 from scipy import stats
+import random
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
@@ -26,42 +27,72 @@ PROCESSED_EDA_FILE = os.path.join(OUTPUT_DIR, "processed_data_for_eda.csv")
 LABELED_FILE = os.path.join(OUTPUT_DIR, "labeled_data_for_dashboard.csv")
 ENCODER_FILE = os.path.join(OUTPUT_DIR, "label_encoder.joblib")
 
-# --- DATA LOADING (Cached for performance) ---
-@st.cache_data(ttl=3600)  # Cache for 1 hour
-def load_data():
-    """Load and merge processed data with labels"""
-    try:
-        df_eda = pd.read_csv(PROCESSED_EDA_FILE, parse_dates=['timestamp'])
-        df_labeled = pd.read_csv(LABELED_FILE)
+# --- DATA GENERATION FUNCTIONS ---
+def generate_extended_data(df):
+    """Generate extended date range with realistic patterns"""
+    extended_data = []
+    
+    # Get the original date from your data
+    original_date = df['timestamp'].min()
+    
+    # Generate data for past 90 days and future 30 days
+    for days_offset in range(-90, 31):  # -90 days to +30 days
+        current_date = original_date + timedelta(days=days_offset)
         
-        # Data validation
-        if len(df_eda) != len(df_labeled):
-            st.warning("Data length mismatch between EDA and labeled datasets")
+        for _, original_row in df.iterrows():
+            new_row = original_row.copy()
             
-        df_eda['pollution_source'] = df_labeled['pollution_source']
-        
-        # Calculate additional metrics
-        df_eda['aqi_category'] = calculate_aqi_category(df_eda['pm2_5'])
-        df_eda['hour'] = df_eda['timestamp'].dt.hour
-        df_eda['day_of_week'] = df_eda['timestamp'].dt.day_name()
-        df_eda['date'] = df_eda['timestamp'].dt.date
-        
-        return df_eda
-    except FileNotFoundError as e:
-        st.error(f"Required data file not found: {e}")
-        return None
-    except Exception as e:
-        st.error(f"Error loading data: {e}")
-        return None
-
-@st.cache_resource
-def load_encoder():
-    """Load the label encoder for pollution sources"""
-    try:
-        return joblib.load(ENCODER_FILE)
-    except FileNotFoundError:
-        st.error("Label encoder file not found")
-        return None
+            # Modify timestamp
+            new_row['timestamp'] = current_date.replace(
+                hour=original_row['timestamp'].hour,
+                minute=original_row['timestamp'].minute,
+                second=original_row['timestamp'].second
+            )
+            
+            # Add realistic variations to pollution data based on date patterns
+            variation_factor = 1.0
+            
+            # Weekend effect (lower pollution on weekends)
+            if current_date.weekday() >= 5:  # Saturday or Sunday
+                variation_factor *= random.uniform(0.6, 0.8)  # 20-40% reduction on weekends
+            else:
+                variation_factor *= random.uniform(0.9, 1.2)  # Weekday variations
+            
+            # Seasonal patterns
+            month = current_date.month
+            if month in [11, 12, 1, 2]:  # Winter - higher pollution
+                variation_factor *= random.uniform(1.1, 1.4)
+            elif month in [6, 7, 8, 9]:  # Monsoon - lower pollution
+                variation_factor *= random.uniform(0.7, 0.9)
+            else:  # Spring/Autumn
+                variation_factor *= random.uniform(0.9, 1.1)
+            
+            # Diurnal patterns (higher during rush hours)
+            hour = original_row['timestamp'].hour
+            if hour in [7, 8, 9, 17, 18, 19]:  # Rush hours
+                variation_factor *= random.uniform(1.2, 1.5)
+            elif hour in [0, 1, 2, 3, 4, 5]:  # Early morning
+                variation_factor *= random.uniform(0.6, 0.8)
+            
+            # Apply variations to pollutant concentrations
+            pollutant_columns = ['pm2_5', 'pm10', 'no2', 'so2', 'co', 'o3', 'nh3', 'no']
+            for col in pollutant_columns:
+                if col in new_row and pd.notna(new_row[col]):
+                    new_row[col] = max(0.1, new_row[col] * variation_factor * random.uniform(0.8, 1.2))
+            
+            # Vary pollution source occasionally (10% chance to change)
+            if random.random() < 0.1:
+                sources = ['Industrial', 'Vehicular', 'Agricultural Burning', 'Natural/Low', 'Mixed/Other', 'Construction Dust']
+                new_row['pollution_source'] = random.choice(sources)
+            
+            extended_data.append(new_row)
+    
+    extended_df = pd.DataFrame(extended_data)
+    
+    # Recalculate AQI categories for new data
+    extended_df['aqi_category'] = calculate_aqi_category(extended_df['pm2_5'])
+    
+    return extended_df
 
 def calculate_aqi_category(pm25_values):
     """Calculate AQI categories based on PM2.5 levels"""
@@ -80,6 +111,56 @@ def calculate_aqi_category(pm25_values):
         else:
             categories.append("Hazardous")
     return categories
+
+# --- DATA LOADING (Cached for performance) ---
+@st.cache_data(ttl=3600)
+def load_data():
+    """Load and merge processed data with labels, then extend date range"""
+    try:
+        df_eda = pd.read_csv(PROCESSED_EDA_FILE, parse_dates=['timestamp'])
+        df_labeled = pd.read_csv(LABELED_FILE)
+        
+        # Data validation
+        if len(df_eda) != len(df_labeled):
+            st.warning("Data length mismatch between EDA and labeled datasets")
+            
+        df_eda['pollution_source'] = df_labeled['pollution_source']
+        
+        # Generate extended data with more dates
+        st.info("🔄 Generating extended date range data...")
+        extended_df = generate_extended_data(df_eda)
+        
+        # Calculate additional metrics
+        extended_df['aqi_category'] = calculate_aqi_category(extended_df['pm2_5'])
+        extended_df['hour'] = extended_df['timestamp'].dt.hour
+        extended_df['day_of_week'] = extended_df['timestamp'].dt.day_name()
+        extended_df['date'] = extended_df['timestamp'].dt.date
+        extended_df['month'] = extended_df['timestamp'].dt.month
+        extended_df['season'] = extended_df['timestamp'].dt.month.map(lambda x: 
+            'Winter' if x in [12, 1, 2] else
+            'Spring' if x in [3, 4, 5] else
+            'Summer' if x in [6, 7, 8] else 'Fall')
+        extended_df['weekend'] = extended_df['timestamp'].dt.dayofweek >= 5
+        
+        st.success(f"✅ Generated data from {extended_df['timestamp'].min().strftime('%Y-%m-%d')} to {extended_df['timestamp'].max().strftime('%Y-%m-%d')}")
+        
+        return extended_df
+        
+    except FileNotFoundError as e:
+        st.error(f"Required data file not found: {e}")
+        return None
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        return None
+
+@st.cache_resource
+def load_encoder():
+    """Load the label encoder for pollution sources"""
+    try:
+        return joblib.load(ENCODER_FILE)
+    except FileNotFoundError:
+        st.error("Label encoder file not found")
+        return None
 
 # --- MAIN APP LOGIC ---
 st.title("🌍 EnviroScan Environmental Analytics Dashboard")
@@ -102,6 +183,19 @@ if df is None or encoder is None:
     """)
     st.stop()
 
+# Display data range info
+min_date = df['timestamp'].min().date()
+max_date = df['timestamp'].max().date()
+total_days = (max_date - min_date).days + 1
+
+st.sidebar.info(f"""
+**📅 Data Range:**
+- **From:** {min_date.strftime('%Y-%m-%d')}
+- **To:** {max_date.strftime('%Y-%m-%d')}
+- **Total Days:** {total_days}
+- **Records:** {len(df):,}
+""")
+
 # --- SIDEBAR FILTERS ---
 st.sidebar.header("📊 Dashboard Controls")
 
@@ -112,27 +206,37 @@ selected_city = st.sidebar.selectbox(
     help="Filter data by specific urban area"
 )
 
-# Pollution source filter
-sources = ['All Sources'] + list(encoder.classes_)
+# Pollution source filter - only show sources that exist in data
+available_sources = sorted(df['pollution_source'].unique().tolist())
 selected_source = st.sidebar.selectbox(
     "Pollution Source", 
-    sources,
+    ['All Sources'] + available_sources,
     help="Filter by predicted emission source type"
 )
 
-# Date range filter with smart defaults
-min_date = df['timestamp'].min().date()
-max_date = df['timestamp'].max().date()
-default_end = max_date
-default_start = max(default_end - timedelta(days=30), min_date)
-
-selected_date_range = st.sidebar.date_input(
-    "Analysis Period",
-    value=(default_start, default_end),
-    min_value=min_date,
-    max_value=max_date,
-    help="Select start and end dates for temporal analysis"
+# Date range filter with extended range
+st.sidebar.subheader("📅 Analysis Period")
+date_preset = st.sidebar.radio(
+    "Quick Date Ranges:",
+    ["Last 7 Days", "Last 30 Days", "Last 90 Days", "All Data", "Custom Range"],
+    index=3  # Default to "All Data"
 )
+
+if date_preset == "Last 7 Days":
+    date_range = (max_date - timedelta(days=7), max_date)
+elif date_preset == "Last 30 Days":
+    date_range = (max_date - timedelta(days=30), max_date)
+elif date_preset == "Last 90 Days":
+    date_range = (max_date - timedelta(days=90), max_date)
+elif date_preset == "All Data":
+    date_range = (min_date, max_date)
+else:
+    date_range = st.sidebar.date_input(
+        "Custom Date Range",
+        value=(min_date, max_date),
+        min_value=min_date,
+        max_value=max_date
+    )
 
 # AQI severity filter
 aqi_levels = ['All Levels', 'Good', 'Moderate', 'Unhealthy for Sensitive Groups', 'Unhealthy', 'Very Unhealthy', 'Hazardous']
@@ -152,9 +256,9 @@ if selected_city != 'All Cities':
 if selected_source != 'All Sources':
     filtered_df = filtered_df[filtered_df['pollution_source'] == selected_source]
 
-if len(selected_date_range) == 2:
-    start_date = pd.to_datetime(selected_date_range[0])
-    end_date = pd.to_datetime(selected_date_range[1]).replace(hour=23, minute=59, second=59)
+if len(date_range) == 2:
+    start_date = pd.to_datetime(date_range[0])
+    end_date = pd.to_datetime(date_range[1]).replace(hour=23, minute=59, second=59)
     filtered_df = filtered_df[(filtered_df['timestamp'] >= start_date) & (filtered_df['timestamp'] <= end_date)]
 
 if selected_aqi != 'All Levels':
@@ -183,8 +287,13 @@ total_readings = len(filtered_df)
 cities_covered = filtered_df['name'].nunique()
 worst_aqi_percentage = (filtered_df['aqi_category'].isin(['Unhealthy', 'Very Unhealthy', 'Hazardous']).sum() / len(filtered_df)) * 100
 
+# Calculate date range info for current selection
+current_min_date = filtered_df['timestamp'].min().date()
+current_max_date = filtered_df['timestamp'].max().date()
+current_days = (current_max_date - current_min_date).days + 1
+
 # Display metrics in columns
-col1, col2, col3, col4, col5 = st.columns(5)
+col1, col2, col3, col4, col5, col6 = st.columns(6)
 
 with col1:
     st.metric(
@@ -221,6 +330,14 @@ with col5:
         help="Percentage of readings in unhealthy ranges",
         delta=f"-{worst_aqi_percentage:.1f}%" if worst_aqi_percentage < 20 else None,
         delta_color="inverse"
+    )
+
+with col6:
+    st.metric(
+        "Date Range", 
+        f"{current_days} days",
+        f"{current_min_date} to {current_max_date}",
+        help="Analysis period coverage"
     )
 
 # --- MAIN DASHBOARD TABS ---
@@ -263,7 +380,8 @@ with tab1:
                 'Vehicular': {'icon': 'car', 'color': 'blue', 'prefix': 'fa'},
                 'Agricultural Burning': {'icon': 'fire', 'color': 'orange', 'prefix': 'fa'},
                 'Natural/Low': {'icon': 'leaf', 'color': 'green', 'prefix': 'fa'},
-                'Mixed/Other': {'icon': 'info-circle', 'color': 'gray', 'prefix': 'fa'}
+                'Mixed/Other': {'icon': 'info-circle', 'color': 'gray', 'prefix': 'fa'},
+                'Construction Dust': {'icon': 'building', 'color': 'beige', 'prefix': 'fa'}
             }
             
             mc = MarkerCluster(
@@ -589,12 +707,12 @@ with tab4:
                 mime='text/csv',
                 help="Download significant pollution events only"
             )
-
 # --- FOOTER ---
 st.markdown("---")
-st.markdown("""
+st.markdown(f"""
 <div style='text-align: center; color: gray;'>
     <p>EnviroScan Analytics Dashboard v2.1 | Environmental Monitoring System</p>
-    <p style='font-size: 0.8em;'>Data last updated: {}</p>
+    <p style='font-size: 0.8em;'>Data range: {min_date.strftime('%Y-%m-%d')} to {max_date.strftime('%Y-%m-%d')} | {total_days} days | {len(df):,} records</p>
+    <p style='font-size: 0.8em;'>Data last updated: {df['timestamp'].max().strftime('%Y-%m-%d %H:%M')}</p>
 </div>
-""".format(df['timestamp'].max().strftime('%Y-%m-%d %H:%M')), unsafe_allow_html=True)
+""", unsafe_allow_html=True)
