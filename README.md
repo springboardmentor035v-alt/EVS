@@ -44,9 +44,12 @@ python3 scripts/run_pipeline.py
 streamlit run app.py
 -----------------------------------------------------------------------------
 others:-
-
+    
 If dependencies fail to install:
 # Try installing individually
 pip install streamlit pandas scikit-learn xgboost
 pip install folium streamlit-folium plotly
 pip install requests osmnx python-dotenv joblib
+
+https://github.com/user-attachments/assets/555f90ce-8126-4ba7-b1f6-f406d5dfa9bb
+
