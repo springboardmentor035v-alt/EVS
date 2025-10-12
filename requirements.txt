@@ -1,27 +1,15 @@
-# Data handling
+streamlit
 pandas
 numpy
-
-# API requests
+osmnx
 requests
-
-# ML & serialization
 scikit-learn
-joblib
-
-# Visualization
-plotly
-streamlit
-
-# Optional: geospatial
-geopandas
-
-
-osmnx 
+imbalanced-learn
 matplotlib
 seaborn
-
-
+folium
+streamlit-folium
+reportlab
 xgboost
 folium
 streamlit_folium
