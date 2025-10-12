@@ -1,33 +1,8 @@
-# Python virtual environment
+#virtual environment folder
 venv/
-ENV/
-env/
 
-# Model files
-*.pkl
-
-
-
-# Streamlit / Python cache
-__pycache__/
-*.py[cod]
-*.pyo
-.cache/
-
-.bak
-
-# Environments
-.env
-.env.*
-!.env.example
-
-# Python
+#Python cache files
 __pycache__/
 *.pyc
-*.pyo
 
-# IDE
-.vscode/
-.idea/
-.DS_Store
-
+.env
