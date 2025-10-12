@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+osmnx
+requests
+scikit-learn
+imbalanced-learn
+matplotlib
+seaborn
+folium
+streamlit-folium
+reportlab
