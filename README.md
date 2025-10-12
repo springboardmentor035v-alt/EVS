@@ -1,135 +1,183 @@
-Absolutely! Here's the complete and clean `README.md` content formatted as a single code block so you can copy and paste it directly into your project:
+# 🌍 EnviroScan — Real-Time Air Quality Monitoring & Source Prediction
 
-```markdown
-# 🌍 Global Real-Time Pollution Tracker
-
-A real-time global air pollution monitoring and source prediction system built using Python, Streamlit, and machine learning. This project fetches live air quality and weather data, processes it, predicts pollution sources using ML models, and visualizes the results on an interactive map.
+An intelligent, interactive Streamlit dashboard that monitors air quality in real time, provides historical analysis, and predicts pollution sources using advanced machine learning. Experience live AQI data, weather integration, and professional visualizations with export capabilities! 🚀
 
 ---
 
-## Features
+## ✨ Key Features
 
-- Fetches live air quality data from **OpenAQ** and **OpenWeatherMap APIs**
-- Calculates spatial features like distance to roads, factories, and farmlands
-- Rule-based and ML-based labeling of pollution sources (vehicular, industrial, agricultural, natural, unknown)
-- Supports real-time **AQI** visualization with color-coded markers
-- Interactive **map view** using Folium
-- Auto-refresh feature for live updates
-- Machine Learning models: **Random Forest** and **XGBoost**
-- Feature importance visualization
-
----
-
-## Project Structure
-
----
-├── data/
-│   ├── global_locations_cleaned.csv
-│   ├── weather_data.csv
-│   ├── pollution_data.csv
-│   ├── merged_realtime_data.csv
-│   └── processed_data.csv
-│   └── labeled_features.csv
-├── models/
-│   ├── pollution_model.pkl
-│   └── label_encoder.pkl
-├── scripts/
-│   ├── fetch_openq.py
-│   ├── fetch_weather.py
-│   ├── fetch_weather_retry_missing.py (only if the data is missing)
-│   ├── fetch_pollution.py
-│   ├── preproces.py
-│   ├── merge_for_labeling.py
-│   ├── label_rules_advanced.py
-│   └── ml_model.py
-│   └── app.py
-├── requirements.txt
-└── README.md
----
+- 🌡️ **Real-time AQI** from WAQI & OpenWeather APIs (configurable)
+- 📊 **Historical Analysis** with time series and downloadable CSV reports  
+- 🤖 **AI-Powered Source Classification** using Random Forest & XGBoost
+- 🗺️ **Interactive Maps** with Folium station markers and heatmaps
+- 📄 **PDF Report Generation** via ReportLab for professional presentations
+- 🎨 **Light/Dark Theme** with responsive, mobile-friendly UI
+- ⚡ **Smart Fallback System** - seamless synthetic data when APIs unavailable
+- 🚀 **Performance Optimized** with caching to reduce API calls
 
 ---
 
-## Setup Instructions
+## 🗂️ Project Structure
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/magnabenita/EnviroScan
-   cd <repo-folder>
-   ```
-
-2. **Create a virtual environment and install dependencies:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Linux/Mac
-   venv\Scripts\activate     # Windows
-   pip install -r requirements.txt
-   ```
-
-3. **Add your API keys in `app.py` and scripts if needed:**
-   - `OPENAQ_KEY` for OpenAQ API
-   - `OPENWEATHER_KEY` for OpenWeatherMap API
-
-4. **Fetch and preprocess data:**
-   ```bash
-   python scripts/fetch_openq.py
-   python scripts/fetch_weather.py
-   python scripts/fetch_pollution.py
-   python scripts/preprocess.py
-   python scripts/merge_for_labeling.py
-   python scripts/label_rules_advanced.py
-   ```
-
-5. **Train ML models:**
-   ```bash
-   python scripts/ml_model.py
-   ```
-
-6. **Run the Streamlit app:**
-   ```bash
-   streamlit run scripts/app.py
-   ```
-
----
-
-## Usage
-
-### Sidebar Filters:
-- Select pollution sources (vehicular, industrial, agricultural, natural, unknown)
-- Highlight by pollutant or AQI
-- Set refresh interval and number of locations
-
-### Map Visualization:
-- Color-coded markers based on source or AQI
-- Interactive popups with location, pollutant values, and model confidence
-
-### Data Table:
-- Displays live pollution readings, weather data, predicted source, and confidence
-
----
-
-## Model & ML
-
-### Features:
-- Pollutants: `pm2_5`, `pm10`, `no2`, `so2`, `co`, `o3`
-- AQI, temperature, humidity, wind speed
-- Spatial distances: road, factory, farmland
-
-### Models:
-- Random Forest (default) and XGBoost
-- Label encoding stored in `models/label_encoder.pkl`
-
----
-
-## Notes
-
-- `.gitignore` ignores `.pkl`, `.csv`, `venv`, `.cache`, and `.bak` files
-- Rate limits are handled in API fetch scripts
-- Backup of weather data is created before retrying missing locations
-- The project currently supports India locations; can be extended globally
-
----
-
-## License
-
-MIT License
 ```
+📦 EnviroScan/
+├── 🎯 streamlit_dashboard.py      # Main Streamlit app (UI + views)
+├── 🌐 real_aqi_data.py           # Live AQI + weather API integration
+├── 🔧 data_loader.py             # Data processing & ML utilities
+├── 📋 requirements.txt           # Project dependencies
+├── 📖 REAL_DATA_SETUP.md         # API setup & configuration guide
+├── 📄 README.md                  # Project documentation
+├── 🔐 LICENSE                    # MIT License
+└── 🚫 .gitignore                 # Git ignore patterns
+```
+
+## 🚀 Quick Start (Local)
+
+### 1️⃣ Clone Repository
+```bash
+git clone https://github.com/amishiverma/Amishi-Verma.git
+cd Amishi-Verma
+```
+
+### 2️⃣ Setup Environment
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate environment
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### 3️⃣ Configure API Keys (Optional for Live Data)
+Choose your preferred method:
+
+**🔒 Streamlit Secrets (Recommended for Cloud):**
+Create `.streamlit/secrets.toml`:
+```toml
+WAQI_TOKEN = "93a6a5ac6b2bba5e166206d19b918e6b747fe14f"
+```
+
+**🌐 Environment Variables:**
+```bash
+# Windows
+set WAQI_TOKEN=93a6a5ac6b2bba5e166206d19b918e6b747fe14f
+
+# Linux/macOS  
+export WAQI_TOKEN=93a6a5ac6b2bba5e166206d19b918e6b747fe14f
+```
+
+### 4️⃣ Launch Dashboard
+```bash
+streamlit run streamlit_dashboard.py
+```
+🎉 **Success!** Open your browser to `http://localhost:8501`
+
+## 🌐 Real Data Configuration
+
+### 📡 Supported APIs
+- **🏭 WAQI (World Air Quality Index)**: [aqicn.org/api](https://aqicn.org/api/) - Global AQI & station data
+  
+### 🔑 API Key Setup
+
+**🚀 Quick WAQI Setup (2 minutes):**
+1. Visit: [aqicn.org/api](https://aqicn.org/api/)
+2. Click "Request API Token"
+3. Fill simple form (name, email, usage description)
+4. Get instant free token!
+
+**Required environment variables:**
+- `WAQI_TOKEN` - Your World Air Quality Index API token
+
+**🔒 Security Note:** 
+Real API token has been removed from the code for security reasons. To run with live data, obtain your own free token from [aqicn.org/api](https://aqicn.org/api/) and add it to your environment variables or Streamlit secrets.
+
+**Example token format:** `93a6a5ac6b2bba5e166206d19b918e6b747fe14f`
+
+---
+
+
+
+## 🎯 Dashboard Features & Usage
+
+### 📊 **Three Main Views**
+- **📈 Historical Analysis** - Time series charts and trend analysis
+- **🔮 Prediction View** - ML-powered source classification and forecasting  
+- **🌍 Real-Time AQI** - Live air quality data with interactive maps
+
+### 🎛️ **Interactive Controls**
+- **🌙 Theme Toggle** - Switch between light and dark modes
+- **🏙️ City Selection** - Choose from 8+ major Indian cities
+- **📥 Export Options** - Download PDF reports and CSV data
+- **⚡ Real Data Toggle** - Switch between live APIs and synthetic data
+
+### 🗺️ **Map Visualizations**
+- Color-coded AQI markers with station details
+- Interactive popups showing pollutant levels
+- Responsive design for desktop and mobile
+
+---
+
+## 🤖 Machine Learning & APIs
+
+### 🔬 **ML Models**
+```python
+# Get live city AQI data
+from real_aqi_data import RealAQIData
+api = RealAQIData()
+data = api.get_real_time_aqi_waqi("Delhi")
+
+# Run complete ML workflow  
+from data_loader import run_complete_workflow
+results = run_complete_workflow("Delhi")
+```
+
+### 🏗️ **Architecture**
+- **Random Forest & XGBoost** for source classification
+- **Feature Engineering** with spatial and temporal data
+- **Intelligent Caching** with 5-minute TTL for API calls
+- **Graceful Fallbacks** to synthetic data when APIs unavailable
+
+---
+
+## 📝 Notes & Best Practices
+
+- 🔐 **Security**: API keys stored in Streamlit secrets/environment variables only
+- ⚡ **Performance**: Intelligent caching reduces API calls and improves response time  
+- 🛡️ **Reliability**: Fallback system ensures dashboard always displays meaningful data
+- 📱 **Responsive**: Mobile-friendly design with touch-optimized controls
+
+---
+
+## 🤝 Contributing
+
+1. **🍴 Fork** the repository
+2. **🌿 Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **💾 Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **📤 Push** to branch (`git push origin feature/amazing-feature`)
+5. **🔄 Open** a Pull Request
+
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🎉 Ready to Monitor Air Quality?
+
+**Get started in 3 commands:**
+```bash
+git clone https://github.com/amishiverma/Amishi-Verma.git
+cd Amishi-Verma && pip install -r requirements.txt  
+streamlit run streamlit_dashboard.py
+```
+
+**🌟 Star this repo if you find it useful!** 
