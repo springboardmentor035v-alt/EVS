@@ -1,0 +1,29 @@
+# Data handling
+pandas
+numpy
+
+# API requests
+requests
+
+# ML & serialization
+scikit-learn
+joblib
+
+# Visualization
+plotly
+streamlit
+
+# Optional: geospatial
+geopandas
+
+
+osmnx 
+matplotlib
+seaborn
+
+
+xgboost
+folium
+streamlit_folium
+streamlit_autorefresh
+python-dotenv
