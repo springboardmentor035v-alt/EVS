@@ -1,4 +1,4 @@
-# scripts/04_train_model.py (FINAL CORRECTED VERSION)
+
 import pandas as pd
 import joblib
 import seaborn as sns
@@ -44,9 +44,7 @@ def run_model_training():
     
     logging.info("\n--- Model Performance Evaluation ---")
     
-    # THIS IS THE FINAL FIX: Add 'labels' parameter to make the report robust
-    # This prevents the ValueError if the small test set is missing a class by chance.
-# THIS IS THE FINAL, CORRECT CODE
+
     report = classification_report(
         y_test, 
         y_pred, 
@@ -81,7 +79,7 @@ def run_model_training():
     joblib.dump(model, config.MODEL_FILE)
     joblib.dump(le, config.ENCODER_FILE)
     logging.info(f"💾 Model and encoder saved.")
-    logging.info("\n✅ Module 4 completed successfully!")
+    logging.info(" completed successfully!")
 
 if __name__ == "__main__":
     run_model_training()

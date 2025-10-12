@@ -3,7 +3,7 @@ import pandas as pd
 import requests
 import osmnx as ox
 import os
-import config  # CORRECTED IMPORT
+import config 
 import logging
 
 # The rest of the file is the same...
