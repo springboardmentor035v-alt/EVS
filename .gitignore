@@ -1,0 +1,4 @@
+.env
+/venv
+module1_data.csv
+/data
