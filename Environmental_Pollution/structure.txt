@@ -1,0 +1,20 @@
+EnviroScan_Project/
+│
+├── data/
+│   ├── raw/
+│   │   ├── air_quality.csv
+│   │   └── weather.csv
+│   ├── processed/
+│   │   └── consolidated_data.csv
+│   └── consolidated_data.json
+│
+├── notebooks/
+│   └── 1_Data_Collection_Exploration.ipynb
+│
+├── scripts/
+│   ├── config.py
+│   ├── data_collector.py
+│   └── utils.py
+│
+├── README.md
+└── requirements.txt

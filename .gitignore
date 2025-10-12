@@ -1,0 +1,11 @@
+# Ignore Python Virtual Environments
+venv/
+.venv/
+
+# Ignore large data files (only commit small, necessary source data)
+enviscan4/data/consolidated_enviro_data.json
+enviscan4/data/consolidated_enviro_data.csv
+enviscan4/data/processed_enviro_data.csv
+
+# Ignore large output files
+enviscan4/outputs/

@@ -1,0 +1,14 @@
+streamlit
+pandas
+numpy
+requests
+urllib3
+osmnx
+joblib
+folium
+streamlit-folium
+scikit-learn
+shapely
+plotly
+geopandas
+openaq
