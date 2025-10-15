@@ -58,6 +58,12 @@ EnviroScan_Project/
 |— requirements.txt # Python dependencies
 |— README.md # This file
 ```
+## Output Demo Images:
+
+![Dashboard Images](demoimgs/Screenshot%202025-10-15%20225208.png)
+![Dashboard Images](demoimgs/Screenshot%202025-10-15%20225252.png)
+![Dashboard Images](demoimgs/Screenshot%202025-10-15%20225342.png)
+
 
 
 ## 🚀 Setup and Execution Guide
