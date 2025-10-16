@@ -1,135 +1,141 @@
-Absolutely! Here's the complete and clean `README.md` content formatted as a single code block so you can copy and paste it directly into your project:
+# EnviroScan: Andhra Pradesh Pollution Monitoring Dashboard
 
-```markdown
-# 🌍 Global Real-Time Pollution Tracker
+<img src="enviroscan_banner.png" width="70%" alt="EnviroScan Banner" />
 
-A real-time global air pollution monitoring and source prediction system built using Python, Streamlit, and machine learning. This project fetches live air quality and weather data, processes it, predicts pollution sources using ML models, and visualizes the results on an interactive map.
+**EnviroScan** is an advanced, interactive dashboard for monitoring, analyzing, visualizing, and forecasting air pollution across Andhra Pradesh, India. Built with Python and Streamlit, it empowers users to view real-time, historical, and predictive AQI data, explore pollution sources, and receive SMS alerts for unsafe conditions.
+
+---
+
+## Table of Contents
+
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Tech Stack](#tech-stack)
+- [Credits](#credits)
+- [License](#license)
 
 ---
 
 ## Features
 
-- Fetches live air quality data from **OpenAQ** and **OpenWeatherMap APIs**
-- Calculates spatial features like distance to roads, factories, and farmlands
-- Rule-based and ML-based labeling of pollution sources (vehicular, industrial, agricultural, natural, unknown)
-- Supports real-time **AQI** visualization with color-coded markers
-- Interactive **map view** using Folium
-- Auto-refresh feature for live updates
-- Machine Learning models: **Random Forest** and **XGBoost**
-- Feature importance visualization
+- 📊 **Pollution Trends:** Visualize time series trends for PM2.5, PM10, NO2, SO2, CO, and Ozone for any Andhra Pradesh city.
+- 🗺️ **Interactive Map & Alerts:** Explore AQI and pollutant levels on a city map with vivid heatmaps and marker clusters for speed and clarity. Real-time pollution alerts shown for selected city.
+- 🌀 **Source Distribution:** Pie chart analysis of pollution sources (Vehicular, Industrial, etc.) by city or filter.
+- ⏳ **Historical View:** See how air quality changed in the past, city-wise and pollutant-wise.
+- 🕒 **Future Prediction:** Select a future date and get an AQI forecast and category (Good, Satisfactory, Moderate, etc.) for your city and pollutant.
+- 📩 **SMS Alerts:** Get SMS notifications for AQI breaches (via Twilio).
+- 📑 **Download Data:** Export city-filtered AQI and pollutant data to CSV.
+- 💡 **Beautiful UI:** Dark sidebar, attractive navigation, project/about tab, and custom imagery.
+- ⚡ **Fast Filtering:** By city, pollutant, and date range (separate start and end date pickers).
+- 🖼️ **Custom Images:** Banner image and sidebar logo support.
 
 ---
+
+## Screenshots
+
+<!-- Add your screenshots with raw GitHub/relative paths -->
+![Main Dashboard](screenshots/dashboard_main.png)
+![Map View](screenshots/dashboard_map.png)
+![Source Distribution](screenshots/source_distribution.png)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8+
+- `streamlit`
+- `pandas`
+- `folium`
+- `streamlit_folium`
+- `matplotlib`
+- `numpy`
+- `twilio`
+- `Pillow`
+
+### Installation
+
+Clone the repo and install dependencies:
+git clone https://github.com/yourusername/enviroscan.git
+cd enviroscan
+pip install -r requirements.txt
+
 
 ## Project Structure
 
----
-├── data/
-│   ├── global_locations_cleaned.csv
-│   ├── weather_data.csv
-│   ├── pollution_data.csv
-│   ├── merged_realtime_data.csv
-│   └── processed_data.csv
-│   └── labeled_features.csv
-├── models/
-│   ├── pollution_model.pkl
-│   └── label_encoder.pkl
-├── scripts/
-│   ├── fetch_openq.py
-│   ├── fetch_weather.py
-│   ├── fetch_weather_retry_missing.py (only if the data is missing)
-│   ├── fetch_pollution.py
-│   ├── preproces.py
-│   ├── merge_for_labeling.py
-│   ├── label_rules_advanced.py
-│   └── ml_model.py
-│   └── app.py
+├── processed_pollution_data.csv
+├── enviroscan_banner.png
+├── side_img.webp
+├── dashboard.py
 ├── requirements.txt
-└── README.md
----
+├── .streamlit/
+│ ├── config.toml
+│ └── secrets.toml
+├── screenshots/
+│ ├── dashboard_main.png
+│ ├── dashboard_map.png
+│ └── source_distribution.png
 
 ---
 
-## Setup Instructions
+## Configuration
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/magnabenita/EnviroScan
-   cd <repo-folder>
-   ```
+Set the following [Streamlit secret variables](https://docs.streamlit.io/streamlit-cloud/get-started/deploy-an-app/connect-to-data-sources/secrets-management) for Twilio SMS alerts:
 
-2. **Create a virtual environment and install dependencies:**
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # Linux/Mac
-   venv\Scripts\activate     # Windows
-   pip install -r requirements.txt
-   ```
-
-3. **Add your API keys in `app.py` and scripts if needed:**
-   - `OPENAQ_KEY` for OpenAQ API
-   - `OPENWEATHER_KEY` for OpenWeatherMap API
-
-4. **Fetch and preprocess data:**
-   ```bash
-   python scripts/fetch_openq.py
-   python scripts/fetch_weather.py
-   python scripts/fetch_pollution.py
-   python scripts/preprocess.py
-   python scripts/merge_for_labeling.py
-   python scripts/label_rules_advanced.py
-   ```
-
-5. **Train ML models:**
-   ```bash
-   python scripts/ml_model.py
-   ```
-
-6. **Run the Streamlit app:**
-   ```bash
-   streamlit run scripts/app.py
-   ```
+.streamlit/secrets.toml
+twilio_account_sid = "your_twilio_account_sid"
+twilio_auth_token = "your_twilio_auth_token"
+twilio_from_number = "+1234567890"
 
 ---
 
 ## Usage
 
-### Sidebar Filters:
-- Select pollution sources (vehicular, industrial, agricultural, natural, unknown)
-- Highlight by pollutant or AQI
-- Set refresh interval and number of locations
+1. **Run the app:**
 
-### Map Visualization:
-- Color-coded markers based on source or AQI
-- Interactive popups with location, pollutant values, and model confidence
+streamlit run dashboard.py
 
-### Data Table:
-- Displays live pollution readings, weather data, predicted source, and confidence
+text
 
----
+2. **Choose a city**, select date range (start/end), pick a pollutant, and explore dashboard sections using the four navigation buttons:
+- Pollution Trends
+- Source Distribution
+- Map & Alerts (shows heatmap and popups for all pollutants in city)
+- Future Prediction (select a future date & pollutant, click "Predict AQI")
 
-## Model & ML
-
-### Features:
-- Pollutants: `pm2_5`, `pm10`, `no2`, `so2`, `co`, `o3`
-- AQI, temperature, humidity, wind speed
-- Spatial distances: road, factory, farmland
-
-### Models:
-- Random Forest (default) and XGBoost
-- Label encoding stored in `models/label_encoder.pkl`
+3. **Optionally enable SMS alerts** or download filtered data to CSV.
 
 ---
 
-## Notes
+## Tech Stack
 
-- `.gitignore` ignores `.pkl`, `.csv`, `venv`, `.cache`, and `.bak` files
-- Rate limits are handled in API fetch scripts
-- Backup of weather data is created before retrying missing locations
-- The project currently supports India locations; can be extended globally
+- **Python** 
+- **Streamlit** (_dashboard app, widgets, styling_)
+- **Pandas** (_data handling_)
+- **Folium & streamlit_folium** (_responsive maps, heatmaps, clusters_)
+- **Matplotlib** (_data visualization_)
+- **NumPy** (_calculation, AQI calculation_)
+- **Twilio** (_SMS alerts_)
+- **Pillow** (_image processing for side/banner images_)
+
+---
+
+## Credits
+
+- Datasets: [OpenAQ](https://openaq.org/) and Andhra Pradesh Pollution Board, plus custom processed sources.
+- Banner/sidebar images: (Google images).
 
 ---
 
 ## License
 
-MIT License
-```
+[MIT](LICENSE)
+
+---
+
+_For questions or collaboration, please open an issue or contact tejanareddy06@gmail.com
