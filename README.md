@@ -61,7 +61,7 @@
 ### Installation
 
 Clone the repo and install dependencies:
-git clone https://github.com/yourusername/enviroscan.git
+git clone https://github.com/teja_nareddy/enviroscan.git
 cd enviroscan
 pip install -r requirements.txt
 
