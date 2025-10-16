@@ -1,0 +1,79 @@
+<div id="particles-js" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -100;"></div>
+<style>
+  #particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -100;
+    background: linear-gradient(135deg, #1e3a8a, #065f46); /* Deep blue to dark teal */
+    background-size: 200% 200%;
+    animation: gradientAnimation 15s ease infinite;
+  }
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .stApp, [data-testid="stAppViewContainer"] {
+    position: relative;
+    z-index: 10 !important;
+    background: rgba(15, 23, 42, 1.0) !important; /* Dark blue-gray content background */
+    color: #ffffff !important; /* White text for contrast */
+  }
+  [data-testid="stSidebar"] {
+    background: #1e1e1e !important; /* Black sidebar, retained from previous */
+    z-index: 20 !important;
+    color: #ffffff !important; /* White text for contrast */
+    height: 100vh !important; /* Full viewport height, retained */
+    overflow-y: auto !important; /* Vertical scrollbar, retained */
+    overflow-x: hidden !important; /* Prevent horizontal scrollbar, retained */
+    scrollbar-width: thin; /* Slim scrollbar for Firefox, retained */
+    scrollbar-color: #93c5fd #1e293b; /* Blue thumb, dark gray track, retained */
+  }
+  /* Custom scrollbar styling for WebKit browsers (Chrome, Safari, Edge), retained */
+  [data-testid="stSidebar"]::-webkit-scrollbar {
+    width: 8px;
+  }
+  [data-testid="stSidebar"]::-webkit-scrollbar-track {
+    background: #1e293b; /* Dark gray track */
+  }
+  [data-testid="stSidebar"]::-webkit-scrollbar-thumb {
+    background-color: #93c5fd; /* Blue thumb to match particle links */
+    border-radius: 4px;
+    border: 2px solid #1e293b; /* Dark border for contrast */
+  }
+  .css-1v3fvcr, .css-1lcbmhc, .css-1d391kg {
+    z-index: 15 !important;
+    background: rgba(15, 23, 42, 1.0) !important; /* Match content background */
+    color: #ffffff !important; /* White text */
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+  particlesJS('particles-js', {
+    particles: {
+      number: { value: 50, density: { enable: true, value_area: 800 } },
+      color: { value: ['#93c5fd', '#6ee7b7', '#ffffff'] }, /* Light blue, light green, white */
+      shape: { type: 'circle', stroke: { width: 0 } },
+      opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
+      size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1 } },
+      line_linked: { enable: true, distance: 150, color: '#93c5fd', opacity: 0.3, width: 1 },
+      move: { enable: true, speed: 2, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false }
+    },
+    interactivity: {
+      detect_on: 'canvas',
+      events: {
+        onhover: { enable: true, mode: 'grab' },
+        onclick: { enable: true, mode: 'push' },
+        resize: true
+      },
+      modes: {
+        grab: { distance: 200, line_linked: { opacity: 0.5 } },
+        push: { particles_nb: 4 }
+      }
+    },
+    retina_detect: true
+  });
+</script>
