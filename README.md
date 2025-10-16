@@ -9,7 +9,6 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Screenshots](#screenshots)
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
 - [Configuration](#configuration)
@@ -32,15 +31,6 @@
 - 💡 **Beautiful UI:** Dark sidebar, attractive navigation, project/about tab, and custom imagery.
 - ⚡ **Fast Filtering:** By city, pollutant, and date range (separate start and end date pickers).
 - 🖼️ **Custom Images:** Banner image and sidebar logo support.
-
----
-
-## Screenshots
-
-<!-- Add your screenshots with raw GitHub/relative paths -->
-![Main Dashboard](screenshots/dashboard_main.png)
-![Map View](screenshots/dashboard_map.png)
-![Source Distribution](screenshots/source_distribution.png)
 
 ---
 
