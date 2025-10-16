@@ -1,0 +1,14 @@
+pandas
+requests
+osmnx
+scikit-learn
+joblib
+seaborn
+matplotlib
+python-dotenv
+streamlit
+streamlit-folium
+folium
+plotly
+xgboost
+python-pptx
